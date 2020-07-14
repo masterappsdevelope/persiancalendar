@@ -1,0 +1,155 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import org.jetbrains.kotlin.config.KotlinCompilerVersion
+
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+
+
+apply plugin: 'kotlin-android-extensions'
+
+
+android {
+
+        useLibrary 'org.apache.http.legacy'
+
+    signingConfigs {
+        config {
+            keyAlias 'syshbm'
+            keyPassword 'android'
+            storeFile file('G:/android/key/key/ara.keystore')
+            storePassword 'android'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    compileSdkVersion 28
+    dataBinding {
+        enabled = true
+    }
+    defaultConfig {
+        applicationId "com.ara.persiancalendar"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 2
+        versionName "1.1"
+        vectorDrawables.useSupportLibrary = true
+        resConfigs "en", "fa", "ckb", "ar", "ur", "ps", "glk", "azb", "ja"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "bricks"
+    productFlavors {
+        google120 {
+            applicationId 'com.ara.persiancalendar'
+            resValue 'string', 'WaitTime', '"120"'
+            resValue "string", "NGApiKey", "f0640c81e463fcc202439a4264553f736a3c86b65eb05ef75cbcc652683a793c"
+            resValue "string", "GoogleSenderId", "370860077669"
+            resValue "string", "NGVersionType", "GOOGLEPLAY_YNYYY"
+            signingConfig signingConfigs.config
+        }
+        google0 {
+            applicationId 'com.ara.persiancalendar'
+            resValue 'string', 'WaitTime', '"0"'
+            resValue "string", "NGApiKey", "f0640c81e463fcc202439a4264553f736a3c86b65eb05ef75cbcc652683a793c"
+            resValue "string", "GoogleSenderId", "370860077669"
+            resValue "string", "NGVersionType", "GOOGLEPLAY_YNYYY"
+            signingConfig signingConfigs.config
+        }
+        cafepackage {
+            applicationId 'com.ara.persiancalendar'
+            resValue 'string', 'WaitTime', '"120"'
+            resValue 'string', 'NGVersionType', '"BAZAAR_YYYYYYYYYY"'
+            resValue "string", "NGApiKey", "f0640c81e463fcc202439a4264553f736a3c86b65eb05ef75cbcc652683a793c"
+            resValue "string", "GoogleSenderId", "370860077669"
+            signingConfig signingConfigs.config
+        }
+        cafepackage0 {
+            applicationId 'com.ara.persiancalendar'
+            resValue 'string', 'WaitTime', '"0"'
+            resValue 'string', 'NGVersionType', '"BAZAAR_YYYYYYYYYY"'
+            resValue "string", "NGApiKey", "f0640c81e463fcc202439a4264553f736a3c86b65eb05ef75cbcc652683a793c"
+            resValue "string", "GoogleSenderId", "370860077669"
+            signingConfig signingConfigs.config
+        }
+    }
+    buildToolsVersion = '28.0.3'
+}
+dependencies {
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.preference:preference:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "com.google.android:flexbox:1.1.0"
+    implementation "com.google.android.apps.dashclock:dashclock-api:2.0.0"
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    api 'arna:nglib:3.4.7.3'
+
+
+    def navVersion = "2.2.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+//    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
+//    kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61"
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.0"
+
+    implementation "androidx.work:work-runtime:2.3.0"
+    // Unnecessary size addition as it adds co-routine apparently also
+    // implementation "android.arch.work:work-runtime-ktx:1.0.0-beta03"
+
+    def daggerVersion = '2.25.3'
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+//    implementation 'org.apache.httpcomponents:httpcore:4.4.9'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.android.volley:volley:1.1.0'
+//    implementation 'org.apache.httpcomponents:httpclient:4.5.5'
+
+//    def leakCanaryVersion = "2.0"
+//    debugimplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+//    debugimplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakCanaryVersion"
+
+//  debugimplementation "com.github.pedrovgs:lynx:1.1.0"
+
+//    testimplementation "junit:junit:4.12"
+//
+//    androidTestimplementation "androidx.test:runner:1.1.1"
+//    androidTestimplementation "androidx.test:rules:1.1.1"
+//    androidTestimplementation "androidx.test.espresso:espresso-contrib:3.1.1"
+//    androidTestimplementation "androidx.test.espresso:espresso-core:3.1.1"
+
+    implementation "com.ernestoyaquello.stepperform:vertical-stepper-form:2.2.3"
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android-core:2.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
